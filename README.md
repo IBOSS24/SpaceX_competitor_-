@@ -1,153 +1,144 @@
-# SpaceX Falcon 9 — First‑Stage Landing Prediction 🚀
-_A Machine Learning capstone built from data collection → wrangling → EDA/SQL → visualization → geospatial mapping → classification._
+# 🚀 SpaceX Falcon 9 — First-Stage Landing Prediction
 
-## Overview
-This repository predicts **whether a Falcon 9 first stage lands successfully** (`Class ∈ {0,1}`). It combines real data collection (API + web scraping), rigorous wrangling, exploratory analysis (including SQL-in-notebook), visualization, geospatial mapping with Folium, and a final ML model trained and evaluated on engineered features. The repo also includes an optional **Dash** dashboard for interactive exploration.
+An **IBM Data Science capstone** connecting data acquisition, SQL exploration, geospatial visualization, and classical machine learning to analyze Falcon 9 booster landing outcomes.
 
-**Why this project matters:** recovering the booster saves millions. Predicting success helps analyze risk, identify drivers (payload, site, booster version), and communicate insights to stakeholders.
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![pandas](https://img.shields.io/badge/pandas-173B57?style=flat-square&logo=pandas&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white)
+![Plotly](https://img.shields.io/badge/Plotly-3F4F75?style=flat-square&logo=plotly&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=flat-square&logo=jupyter&logoColor=white)
 
----
-
-## What’s in this repo (your working files)
-- **Data**
-  - `dataset_part_2.csv` — enriched dataset with core fields like `FlightNumber, Date, BoosterVersion, PayloadMass, Orbit, LaunchSite, Outcome, Flights, GridFins, Reused, Legs, LandingPad, Block, ReusedCount, Serial, Longitude, Latitude, Class` plus one‑hot columns for booster serials.
-  - `dataset_part_3.csv` — modeling‑ready matrix with numerical/categorical features (including one‑hot columns for `Serial_*`) used in training/evaluation.
-
-- **Notebooks (by stage)**
-  1. `jupyter-labs-spacex-data-collection-api.ipynb` — Data collection via API (requests), JSON to tabular, initial cleaning.
-  2. `jupyter-labs-webscraping.ipynb` — Supplement data with web scraping (BeautifulSoup), parsing HTML tables/pages.
-  3. `labs-jupyter-spacex-Data wrangling.ipynb` — Cleaning, type casting, feature derivation, handling missingness; export to `dataset_part_2.csv`.
-  4. `jupyter-labs-eda-sql-coursera_sqllite.ipynb` — EDA using **SQLite** inside the notebook (SQL cells alongside pandas) to answer analytical questions.
-  5. `Data_Visualization_lab.ipynb` — Visual analytics: distributions, relationships, categorical contrasts; plots ready for reports.
-  6. `lab_jupyter_launch_site_location.ipynb` — **Folium** map of launch sites (MarkerCluster), success/failure coloring, tooltips/popups.
-  7. `SpaceX_Machine Learning Prediction_Part_5.ipynb` — Model training & evaluation for the landing classification task; confusion matrix, ROC/PR‑AUC, calibration and threshold search.
-
-- **Apps / Scripts**
-  - `SpaceX.py` — Plotly **Dash** app (“SpaceX Launch Records Dashboard”) for interactive filtering and scatter/pie views of payload vs success. Run with `python SpaceX.py`.  *(Code structure mirrors the standard Coursera lab app.)*
+[Overview](#-project-overview) · [Workflow](#-analysis-workflow) · [Quick start](#-quick-start) · [Dashboard](#-interactive-dashboard) · [Author](#-author) · [Contact](#contact)
 
 ---
 
-## Project structure (suggested)
+## 🎯 Project overview
+
+Booster recovery is an important part of reusable launch operations. This project investigates relationships between launch characteristics and first-stage landing success, then compares classification models for the binary outcome.
+
+The project demonstrates a complete analytical workflow: collect and clean data, explore operational patterns, visualize launch locations, and communicate findings through notebooks, a dashboard, and a report.
+
+## 🏆 Project highlights
+
+- **Data acquisition:** API requests and web scraping.
+- **Data preparation:** cleaning and feature preparation for landing classification.
+- **SQL and visual exploration:** examine relationships between launch characteristics and outcomes.
+- **Geospatial analysis:** Folium maps of launch locations.
+- **Model comparison:** logistic regression, SVM, decision tree, and K-nearest neighbors with GridSearchCV.
+- **Communication:** Plotly Dash dashboard and an included analysis report.
+
+## 🏗️ Analysis workflow
+
+```mermaid
+flowchart TD
+    A["API data"] --> C["Wrangling and feature preparation"]
+    B["Web scraping"] --> C
+    C --> D["SQL and exploratory analysis"]
+    D --> E["Charts, Folium maps and dashboard"]
+    C --> F["Model comparison"]
+    E --> G["Analysis report"]
+    F --> G
 ```
-.
-├── data/
-│   ├── raw/                         # API/HTML outputs before cleaning
-│   ├── interim/                     # temporary merged/intermediate
-│   └── processed/                   # dataset_part_2.csv, dataset_part_3.csv
-├── notebooks/
-│   ├── 01_data_collection_api.ipynb
-│   ├── 02_webscraping.ipynb
-│   ├── 03_data_wrangling.ipynb
-│   ├── 04_eda_sql.ipynb
-│   ├── 05_visualization.ipynb
-│   ├── 06_geospatial_folium.ipynb
-│   └── 07_ml_prediction.ipynb
-├── src/                             # optional: move reusable code here
-│   ├── features.py
-│   ├── train.py
-│   ├── evaluate.py
-│   └── infer.py
-├── app/
-│   └── dash_app.py                  # (rename of SpaceX.py if you prefer)
-├── reports/
-│   ├── figures/                     # confusion matrix, ROC/PR, calibration
-│   └── tables/                      # metrics summaries
-└── README.md
-```
 
-> You already have files organized; the above is a “cleaned” layout you can adopt progressively.
+## 📂 Explore the project
 
----
+| Stage | Repository resource |
+| --- | --- |
+| API acquisition | [Data collection notebook](Data_collecting/data-collection-APIcall.ipynb) |
+| Web scraping | [Scraping notebook](Data_collecting/Webscraping.ipynb) |
+| Data preparation | [Wrangling notebook](EDA/Data%20wrangling.ipynb) |
+| SQL exploration | [SQL notebook](EDA/EDA_sql.ipynb) |
+| Visual analysis | [EDA visualization](Data_Visualization/EDA_Visualization.ipynb) |
+| Launch-site mapping | [Folium notebook](Data_Visualization/Launch_site_location.ipynb) |
+| Classification | [Model development notebook](Model_development/SpaceX_Machine%20Learning%20Prediction_Part_5.ipynb) |
+| Dashboard | [Dash application](Data_Visualization/SpaceX_DashBoard.py) |
+| Findings | [Analysis report](ReportOfTheAnalysis_SpaceX.pdf) |
 
-## Environment & setup
+## 🚀 Quick start
 
-### Requirements (minimal)
-```txt
-python>=3.9
-pandas
-numpy
-scikit-learn
-matplotlib
-seaborn
-plotly
-dash
-folium
-requests
-beautifulsoup4
-lxml
-sqlalchemy
-jupyter
-joblib
-```
-Install:
 ```bash
-pip install -r requirements.txt
-# or, quickly:
-pip install pandas numpy scikit-learn matplotlib seaborn plotly dash folium requests beautifulsoup4 lxml sqlalchemy jupyter joblib
+git clone https://github.com/IBOSS24/SpaceX_competitor_-.git
+cd SpaceX_competitor_-
+python -m venv .venv
 ```
 
-### Trusting notebooks
-If outputs (JS/HTML) don’t render, trust the notebook:
+Activate with `source .venv/bin/activate` on Linux/macOS or `.\.venv\Scripts\Activate.ps1` in Windows PowerShell, then install a starting set of dependencies:
+
 ```bash
-jupyter trust path/to/notebook.ipynb
+python -m pip install pandas numpy scikit-learn matplotlib seaborn plotly dash folium requests beautifulsoup4 lxml sqlalchemy jupyter
+python -m jupyter notebook
 ```
 
----
+This repository does not currently include a pinned requirements file. Some notebooks retain IBM browser-notebook constructs such as `from js import fetch` and top-level `await`; those cells need adaptation to a local runtime, for example by loading the provided CSV URLs with `pandas.read_csv(url)`.
 
-## Reproducing the pipeline
+Follow the acquisition, preparation, exploration, and modeling stages in the table above. Review each notebook's input paths and external data dependencies before execution.
 
-### 1) Data collection
-- Run `jupyter-labs-spacex-data-collection-api.ipynb` to pull launch data via an API, normalize JSON to tabular, and save a raw CSV.
-- Run `jupyter-labs-webscraping.ipynb` to scrape supplemental attributes (e.g., tables with outcomes), merge with API data.
+## 📊 Model comparison and evaluation
 
-### 2) Wrangling & feature engineering
-- Use `labs-jupyter-spacex-Data wrangling.ipynb` to clean types (dates/categoricals), fill/flag missingness, compute engineered features, and export **`dataset_part_2.csv`** to `data/processed/`.
+| Model | Approach explored |
+| --- | --- |
+| Logistic regression | Linear classification baseline |
+| Support vector machine | Kernel and regularization search |
+| Decision tree | Tree depth, splitting, and leaf-size search |
+| K-nearest neighbors | Neighbor count and distance configuration |
 
-### 3) EDA (including SQL)
-- In `jupyter-labs-eda-sql-coursera_sqllite.ipynb`, run SQL queries against an in‑notebook SQLite DB and cross‑check with pandas for accuracy and performance.
+The modeling notebook uses a train/test split and cross-validated parameter search. **A priority improvement is moving standardization inside a scikit-learn Pipeline:** the current notebook fits the scaler before the split, allowing test-set information into preprocessing. Model scores should be re-evaluated after correcting this.
 
-### 4) Visualization
-- Explore patterns in `Data_Visualization_lab.ipynb` (class imbalance, payload vs outcome, booster categories). Save charts to `reports/figures/`.
+Older parameter choices may also need updating for the installed scikit-learn version. This README presents the implemented workflow without asserting deployment-grade predictive performance.
 
-### 5) Geospatial mapping
-- Open `lab_jupyter_launch_site_location.ipynb` to render a **Folium** map showing launch sites (MarkerCluster) colored by outcome; export to `reports/figures/launch_sites_map.html`.
+## 🌐 Interactive dashboard
 
-### 6) Modeling & evaluation
-- Train and evaluate in `SpaceX_Machine Learning Prediction_Part_5.ipynb` using `dataset_part_3.csv` (modeling‑ready features).
-- Report: **Precision/Recall/F1**,  confusion matrix. Select threshold tied to the problem goal (e.g., favor recall).
+The Dash application provides a launch-site selector, success-count pie charts, a payload range slider, and a payload/outcome scatter plot colored by booster category.
 
----
+It expects `spacex_launch_dash.csv` in the current working directory; that CSV is not included in the repository. Obtain the corresponding educational dataset before launching:
 
-## Example CLI (optional if you move logic to `src/`)
 ```bash
-python -m src.train     --train data/processed/dataset_part_3.csv --model_out models/best_model.joblib --seed 42
-python -m src.evaluate  --model models/best_model.joblib         --test  data/processed/dataset_part_3.csv --report_dir reports/
-python -m src.infer     --model models/best_model.joblib         --input data/processed/dataset_part_3.csv --output predictions.csv
+python Data_Visualization/SpaceX_DashBoard.py
 ```
 
----
+Open the URL printed in the terminal. Required columns include `Launch Site`, `class`, `Payload Mass (kg)`, and `Booster Version Category`.
 
-## Dash app (interactive)
-Run the dashboard locally:
-```bash
-python SpaceX.py
-# then open the URL shown in the terminal (usually http://127.0.0.1:8050)
-```
-The app provides:
-- A **site dropdown** for “All Sites” or a specific launch site
-- A **pie chart** summarizing success counts
-- A **payload range slider** and **scatter plot** showing correlation between payload and success, colored by booster version
+## 🧭 Connection to maritime analytics
 
-> This follows the standard “SpaceX Launch Records Dashboard” structure from the lab code. Update `spacex_launch_dash.csv` path if needed, and ensure columns like `Payload Mass (kg)`, `Launch Site`, `class`, and `Booster Version Category` exist in your data.
+This project develops transferable skills for maritime work: acquiring operational data, studying location-dependent outcomes, building geospatial views, and comparing predictive baselines. Future applications could include port traffic analysis and vessel arrival forecasting, with validation designed for their temporal structure.
 
----
+## 🔭 Next steps
 
+- Correct preprocessing leakage and rerun model comparison.
+- Pin a reproducible environment and adapt notebook-specific runtime cells.
+- Document dataset provenance and add data availability checks.
+- Add per-class evaluation and uncertainty reporting.
+- Package reusable acquisition and modeling functions.
 
-## Acknowledgments
-- Educational SpaceX dataset and open IBM SKillNetwork sources used for learning.
-- pandas, scikit-learn, matplotlib, seaborn, plotly/dash, folium communities.
+## 🙏 Acknowledgments
+
+Developed through the IBM Data Science capstone using educational SpaceX launch datasets and IBM Skills Network materials.
 
 ---
 
-## License
-MIT (or your preferred license).
+## 👨‍💻 Author
+
+**Mohammed Badr**  
+State-qualified engineer · Moroccan Royal Navy officer · Building a career in maritime Data Science & ML Engineering
+
+I bring experience at sea and in maritime command centers to my work in applied machine learning. My focus is developing reliable ML systems and applying them to maritime traffic forecasting, vessel behavior analysis, and equipment reliability.
+
+[![Portfolio](https://img.shields.io/badge/Portfolio-173B57?style=flat-square&logo=github&logoColor=white)](https://github.com/IBOSS24/Portfolio_)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mohammed-e-a13664182)
+[![Contact](https://img.shields.io/badge/Contact-Show_details-173B57?style=flat-square&logo=gmail&logoColor=white)](#contact)
+
+<a id="contact"></a>
+
+## 📬 Contact
+
+<details>
+<summary>Show email and contact details</summary>
+
+- **Email:** med.marin17@gmail.com
+- **Gmail:** [Compose an email in Gmail](https://mail.google.com/mail/?view=cm&fs=1&to=med.marin17%40gmail.com)
+- **Mail app:** [med.marin17@gmail.com](mailto:med.marin17@gmail.com)
+- **LinkedIn:** [Mohammed E.](https://www.linkedin.com/in/mohammed-e-a13664182)
+- **GitHub:** [IBOSS24](https://github.com/IBOSS24)
+- **Portfolio:** [View my projects](https://github.com/IBOSS24/Portfolio_)
+
+</details>
